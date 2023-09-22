@@ -99,22 +99,30 @@
                             <a href="../www/php-bigxhtml.html" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Documentacion</a>
                         </li>  
                     </li>
-                    <li>
-                    <button type="button" onclick="goBack()" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
-                    </svg>
-                    <span class="sr-only">Icon description</span>
-                    </button>
-                    </li>
                 </ul>
             </div>
         </div>
     </nav>
     <hr>
+    <!-- Hotbar element -->
+    <div class="absolute bg-gray-200 right-10 mt-10  shadow rounded-lg p-4">  
+        <div class="flex flex-col gap-2 justify-center items-center ml-1">
+            <button type="button" onclick="goBack()" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
+                </svg>
+            </button> 
+            <button type="button" onclick="reloadAllCode()" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                 <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 14 3-3m-3 3 3 3m-3-3h16v-3m2-7-3 3m3-3-3-3m3 3H3v3"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
     <div class="flex justify-between items-center flex-col mt-10">
         <!-- PHP Visualizer -->
-        <div id="visualizer">
+        <div id="visualizer" class="shadow" style="width: 1200px;" >
             <script>
                 function loadFilesList() {
                     var xhr = new XMLHttpRequest();
@@ -127,22 +135,14 @@
                     xhr.send();
                 }
 
-                window.addEventListener("load", loadFilesList);
-
             </script>
         </div>
     </div>
     <!-- Code Display -->
     
     <div class="flex justify-center items-center w-10 flex-col">
-        <div class="inset-x-0 bottom-4 absolute bg-gray-100 shadow flex justify-center"  > <!-- style="resize: vertical;cursor: ns-resize;" id="resizable" -->
-            <?php
-            if (file_exists($archivo_url_2)) {
-                highlight_file($archivo_url_2);
-            } else {
-                echo "El archivo no existe.";
-            }
-            ?>
+        <div class="inset-x-0 bottom-4 absolute bg-gray-100 shadow flex justify-center" id="pre"> <!-- style="resize: vertical;cursor: ns-resize;" id="resizable" -->
+            
         </div>
     </div>
     <script>
@@ -153,12 +153,13 @@
         const resizable = document.getElementById("resizable");
         let prevY = 0;
 
+        /*
         resizable.addEventListener("mousedown", (e) => {
             prevY = e.clientY;
             document.addEventListener("mousemove", resize);
             document.addEventListener("mouseup", stopResize);
         });
-
+        */
         function resize(e) {
             const deltaY = prevY - e.clientY;
             prevY = e.clientY;
@@ -168,6 +169,27 @@
         function stopResize() {
             document.removeEventListener("mousemove", resize);
         }
+
+        function reloadCode(){
+            let phpText = `<?php
+                if (file_exists($archivo_url)) {
+                    highlight_file($archivo_url);
+                } else {
+                    echo "El archivo no existe.";
+                }
+            ?>`
+            document.getElementById("pre").innerHTML = " ";
+            document.getElementById("pre").innerHTML = phpText;
+        }
+
+        // Aqui puedes recargar tanto la vista de php como el visualizador de codigo php //
+
+        function reloadAllCode(){
+            reloadCode();
+            loadFilesList();
+        }
+
+        window.addEventListener("load", reloadAllCode);
 
     </script>
 </body>
@@ -179,7 +201,6 @@
         white-space: pre-wrap;
         display: flex;
         justify-content: center;
-
     }
 
 </style>
