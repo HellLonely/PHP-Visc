@@ -91,8 +91,7 @@
 
     <main class='flex justify-center items-center flex-col'>
         <section class="flex justify-center flex-col items-center gap-12 shadow m-10 p-5 rounded-lg max-w-screen-xl">
-            <h2 class="text-3xl"> Upload Resource PHP</h2>
-            
+            <h2 class="text-3xl"> Upload Resource PHP and HTML</h2>
             <?php
                 if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     $nombre_archivo = $_FILES["archivo"]["name"];
@@ -103,11 +102,11 @@
                     if (empty($nombre_archivo)) {
                         echo "Please select a file.";
                     } else {
-                        $extension_permitida = "php";
+                        $extension_array = array('php', 'html');
                         $extension_archivo = pathinfo($nombre_archivo, PATHINFO_EXTENSION);
                         $ruta_destino = $aplication_resource_folder."/"."$nombre_archivo";
                         
-                        if ($extension_archivo === $extension_permitida) {
+                        if (in_array($extension_archivo,$extension_array)) {
 
                             if (move_uploaded_file($nombre_temporal, $ruta_destino)) {
                                 echo '
@@ -191,20 +190,6 @@
                         <?php echo $aplication_name ?>
                     </span>
                 </a>
-                <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
-                    <li>
-                        <a href="#" class="mr-4 hover:underline md:mr-6 ">About</a>
-                    </li>
-                    <li>
-                        <a href="#" class="mr-4 hover:underline md:mr-6">Privacy Policy</a>
-                    </li>
-                    <li>
-                        <a href="#" class="mr-4 hover:underline md:mr-6 ">Licensing</a>
-                    </li>
-                    <li>
-                        <a href="#" class="hover:underline">Contact</a>
-                    </li>
-                </ul>
             </div>
             <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
             <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <?php echo $aplication_name ?>. All Rights Reserved.</span>

@@ -12,19 +12,20 @@
 
     <link rel="shortcut icon" href="../config/logo.ico" type="image/x-icon">
 
+    <?php 
+        if (isset($_GET['url'])) {
+            $archivo_url = $_GET['url'];
+            $archivo_url_2 = realpath($archivo_url);
+    
+        }
+    ?>
 
-    <title>Document</title>
+
+    <title><?php echo pathinfo($archivo_url, PATHINFO_FILENAME).".".pathinfo($archivo_url, PATHINFO_EXTENSION); ?></title>
 </head>
 
 <body>
-
-
     <?php
-    if (isset($_GET['url'])) {
-        $archivo_url = $_GET['url'];
-        $archivo_url_2 = realpath($archivo_url);
-
-    }
     $config_json_file = '../config/config.json';
     $config_json_content = file_get_contents($config_json_file);
     $config_data = json_decode($config_json_content, true);
@@ -58,7 +59,7 @@
                     class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                     <li>
                         <a href="../index.php"
-                            class="block py-2 pl-3 pr-4 text-gray-900 bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent"
+                            class="block py-2 pl-3 pr-4 text-gray-900 bg-blue-700 rounded md:bg-transparent hover:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent"
                             aria-current="page">Home</a>
                     </li>
                     <li>
@@ -112,7 +113,7 @@
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
                 </svg>
             </button> 
-            <button type="button" onclick="reloadAllCode()" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            <button type="button" onclick="reloadAllCode()" class="hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                  <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 14 3-3m-3 3 3 3m-3-3h16v-3m2-7-3 3m3-3-3-3m3 3H3v3"/>
                 </svg>
@@ -122,7 +123,7 @@
 
     <div class="flex justify-between items-center flex-col mt-10">
         <!-- PHP Visualizer -->
-        <div id="visualizer" class="shadow" style="width: 1200px;" >
+        <div id="visualizer" class="shadow p-4 bg-gray-100" style="width: 1200px;" >
             <script>
                 function loadFilesList() {
                     var xhr = new XMLHttpRequest();
@@ -160,6 +161,7 @@
             document.addEventListener("mouseup", stopResize);
         });
         */
+
         function resize(e) {
             const deltaY = prevY - e.clientY;
             prevY = e.clientY;
@@ -190,6 +192,8 @@
         }
 
         window.addEventListener("load", reloadAllCode);
+
+        
 
     </script>
 </body>
