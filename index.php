@@ -168,6 +168,7 @@
                         }
                     }
                 }
+                
             ?>
 
             <div class="max-w-screen-md">
@@ -197,7 +198,5 @@
             <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">By <?php echo $aplication_author ?></span>
         </div>
     </footer>
-
-
 </body>
 </html>
