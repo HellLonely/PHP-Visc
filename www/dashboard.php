@@ -10,6 +10,7 @@
     <script src="../config/flowbite.min.js"></script>
 
     <link rel="shortcut icon" href="../config/logo.ico" type="image/x-icon">
+    <script src="../resc/main.js"></script>
 
 
     <title>Dashboard</title>
@@ -56,19 +57,7 @@
                     <div id="dropdownNavbar" class="z-10 hidden font-normal bg-white divide-y divide-gray-200 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
                         <ul class="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton" id="resource_list"></ul>
                         <script>
-                            function cargarRecursos() {
-                                var xhr = new XMLHttpRequest();
-                                xhr.onreadystatechange = function() {
-                                    if (xhr.readyState === 4 && xhr.status === 200) {
-                                        document.getElementById("resource_list").innerHTML = xhr.responseText;
-                                    }
-                                };
-                                xhr.open("GET", "../resc/dropdown.php", true);
-                                xhr.send();
-                            }
-
-                            window.addEventListener("load", cargarRecursos);
-
+                            window.addEventListener("load", loadPHPContent("resource_list","../resc/dropdown.php")); //
                         </script>
                     </div>
                 </li>
@@ -93,19 +82,7 @@
                     <div>
                         <ol id="file_list" class="max-w-screen-xl p-6" >
                             <script>
-                                function loadFilesList() {
-                                    var xhr = new XMLHttpRequest();
-                                    xhr.onreadystatechange = function() {
-                                        if (xhr.readyState === 4 && xhr.status === 200) {
-                                            document.getElementById("file_list").innerHTML = xhr.responseText;
-                                        }
-                                    };
-                                    xhr.open("GET", "../resc/load_files.php", true);
-                                    xhr.send();
-                                }
-
-                                window.addEventListener("load", loadFilesList);
-
+                                window.addEventListener("load", loadPHPContent("file_list","../resc/load_files.php"));
                             </script>
                         </ol>
                             <script>
@@ -135,9 +112,10 @@
                                     window.location.href = "../www/resource_load.php?url=" + encodeURIComponent(url);
                                 }
 
-                                let interval = 1000;
+                                let interval = 3000;
                                 setInterval(() => {
-                                    loadFilesList()
+                                    loadPHPContent("resource_list","../resc/dropdown.php");
+                                    loadPHPContent("file_list","../resc/load_files.php")
                                 }, interval);
                             </script>
                     </div>

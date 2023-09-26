@@ -9,6 +9,7 @@
     <link href="config/flowbite.min.css" rel="stylesheet" />
     <script src="config/flowbite.min.js"></script>
     <link rel="shortcut icon" href="config/logo.ico" type="image/x-icon">
+    <script src="resc/main.js"></script>
 
 
     <title>PHP Visc</title>
@@ -55,23 +56,14 @@
                     <div id="dropdownNavbar" class="z-10 hidden font-normal bg-gray-200 divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
                         <ul class="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton" id="resource_list"></ul>
                         <script>
-                            function cargarRecursos() {
-                                var xhr = new XMLHttpRequest();
-                                xhr.onreadystatechange = function() {
-                                    if (xhr.readyState === 4 && xhr.status === 200) {
-                                        document.getElementById("resource_list").innerHTML = xhr.responseText;
-                                    }
-                                };
-                                xhr.open("GET", "resc/dropdown.php", true);
-                                xhr.send();
-                            }
 
-                            window.addEventListener("load", cargarRecursos);
+                            window.addEventListener("load", loadPHPContent("resource_list","resc/dropdown.php"));
 
                             let interval = 3000;
                                 setInterval(() => {
-                                    cargarRecursos()
+                                    loadPHPContent("resource_list","resc/dropdown.php")
                                 }, interval);
+                        
 
                         </script>
                     </div>

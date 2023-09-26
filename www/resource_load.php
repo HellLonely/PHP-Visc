@@ -11,6 +11,7 @@
     <script src="../config/flowbite.min.js"></script>
 
     <link rel="shortcut icon" href="../config/logo.ico" type="image/x-icon">
+    <script src="../resc/main.js"></script>
 
     <?php 
         if (isset($_GET['url'])) {
@@ -76,19 +77,7 @@
                             <ul class="py-2 text-sm text-gray-700 dark:text-gray-400"
                                 aria-labelledby="dropdownLargeButton" id="resource_list"></ul>
                             <script>
-                                function cargarRecursos() {
-                                    var xhr = new XMLHttpRequest();
-                                    xhr.onreadystatechange = function () {
-                                        if (xhr.readyState === 4 && xhr.status === 200) {
-                                            document.getElementById("resource_list").innerHTML = xhr.responseText;
-                                        }
-                                    };
-                                    xhr.open("GET", "../resc/dropdown.php", true);
-                                    xhr.send();
-                                }
-
-                                window.addEventListener("load", cargarRecursos);
-
+                                window.addEventListener("load", loadPHPContent("resource_list","../resc/dropdown.php"));
                             </script>
                         </div>
                     </li>
@@ -124,19 +113,6 @@
     <div class="flex justify-between items-center flex-col mt-10">
         <!-- PHP Visualizer -->
         <div id="visualizer" class="shadow p-4 bg-gray-100" style="width: 1200px;" >
-            <script>
-                function loadFilesList() {
-                    var xhr = new XMLHttpRequest();
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState === 4 && xhr.status === 200) {
-                            document.getElementById("visualizer").innerHTML = xhr.responseText;
-                        }
-                    };
-                    xhr.open("GET", "<?php echo $archivo_url ?>", true);
-                    xhr.send();
-                }
-
-            </script>
         </div>
     </div>
     <!-- Code Display -->
@@ -188,7 +164,7 @@
 
         function reloadAllCode(){
             reloadCode();
-            loadFilesList();
+            loadPHPContent("visualizer","<?php echo $archivo_url ?>");
         }
 
         window.addEventListener("load", reloadAllCode);
