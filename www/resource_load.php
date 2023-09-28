@@ -112,7 +112,7 @@
 
     <div class="flex justify-between items-center flex-col mt-10">
         <!-- PHP Visualizer -->
-        <div id="visualizer" class="shadow p-4 bg-gray-100" style="width: 1200px;" >
+        <div id="visualizer" class="shadow p-4 bg-gray-100" style="width: 500px;" >
         </div>
     </div>
     <!-- Code Display -->
@@ -129,15 +129,7 @@
 
         const resizable = document.getElementById("resizable");
         let prevY = 0;
-
-        /*
-        resizable.addEventListener("mousedown", (e) => {
-            prevY = e.clientY;
-            document.addEventListener("mousemove", resize);
-            document.addEventListener("mouseup", stopResize);
-        });
-        */
-
+        
         function resize(e) {
             const deltaY = prevY - e.clientY;
             prevY = e.clientY;
